@@ -6,7 +6,6 @@ window.sinterklaas.draw = window.sinterklaas.canvas.getContext("2d");
 window.sinterklaas.copyright = {};
 window.sinterklaas.copyright.author = [];
 window.sinterklaas.copyright.author.push("Alexandros de Regt");
-window.sinterklaas.copyright.author.push("Luciano Zimmermann");
 window.sinterklaas.copyright.githublink = "";
 window.sinterklaas.copyright.year = 2020;
 window.sinterklaas.copyright.version = 1;
