@@ -6,24 +6,27 @@ window.sinterklaas.draw = window.sinterklaas.canvas.getContext("2d");
 window.sinterklaas.copyright = {};
 window.sinterklaas.copyright.author = [];
 window.sinterklaas.copyright.author.push("Alexandros de Regt");
-window.sinterklaas.copyright.githublink = "";
+window.sinterklaas.copyright.githublink = "https://github.com/AdeRegt/Christmas2020";
 window.sinterklaas.copyright.year = 2020;
 window.sinterklaas.copyright.version = 1;
 //  hid-listeners (hid: human interface devices)
 window.sinterklaas.hid = {};
 window.sinterklaas.hid.onclick = function(event){
-	event.preventDefault();
-	if(event.button==0){
-		window.sinterklaas.hid.oncommand(1);
-	}else{
-		window.sinterklaas.hid.oncommand(2);
+	if(event.path[0]==window.sinterklaas.canvas){
+		event.preventDefault();
+		if(event.button==0){
+			window.sinterklaas.hid.oncommand(1);
+		}else{
+			window.sinterklaas.hid.oncommand(2);
+		}
 	}
 };
 window.sinterklaas.hid.onkeydown = function(event){
-	event.preventDefault();
 	if(event.key=="ArrowUp"){
+		event.preventDefault();
 		window.sinterklaas.hid.oncommand(1);
 	}else if(event.key=="ArrowDown"){
+		event.preventDefault();
 		window.sinterklaas.hid.oncommand(2);
 	}
 };
@@ -40,6 +43,15 @@ window.sinterklaas.hid.oncommand = function(event){
 document.addEventListener("click",window.sinterklaas.hid.onclick);			// left click
 document.addEventListener("contextmenu",window.sinterklaas.hid.onclick);	// right click
 document.addEventListener("keydown",window.sinterklaas.hid.onkeydown);		// keyboard click
+document.getElementById("jumpbutton").addEventListener("click",function(){
+	window.sinterklaas.hid.oncommand(1);
+});
+document.getElementById("duckbutton").addEventListener("click",function(){
+	window.sinterklaas.hid.oncommand(2);
+});
+document.getElementById("githubbutton").addEventListener("click",function(){
+	window.open(window.sinterklaas.copyright.githublink,"newtab");
+});
 // drawing
 window.sinterklaas.drawing = {};
 window.sinterklaas.drawing.clear = function(){
