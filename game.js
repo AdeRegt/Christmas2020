@@ -280,11 +280,11 @@ window.sinterklaas.timers.drawQueue = function(){
 	window.sinterklaas.drawing.clear();
 	// then draw objects
 	window.sinterklaas.drawing.drawSinterklaas(20,window.sinterklaas.timers.jump.offset-40);
-	for(var i = 0 ; i < window.sinterklaas.spawnables.length; i++){
-		if(window.sinterklaas.spawnables[i].type==1){
-			window.sinterklaas.drawing.drawTree(window.sinterklaas.spawnables[i].width,window.sinterklaas.timers.jump.minHeight-30);
-		}else if(window.sinterklaas.spawnables[i].type==2){
-			window.sinterklaas.drawing.drawCorona(window.sinterklaas.spawnables[i].width,window.sinterklaas.timers.jump.minHeight-40);
+	for(var t = 0 ; t < window.sinterklaas.spawnables.length; t++){
+		if(window.sinterklaas.spawnables[t].type==1){
+			window.sinterklaas.drawing.drawTree(window.sinterklaas.spawnables[t].width,window.sinterklaas.timers.jump.minHeight-30);
+		}else if(window.sinterklaas.spawnables[t].type==2){
+			window.sinterklaas.drawing.drawCorona(window.sinterklaas.spawnables[t].width,window.sinterklaas.timers.jump.minHeight-40);
 		}
 	}
 	// then draw bottomline
@@ -295,9 +295,9 @@ window.sinterklaas.timers.drawQueue = function(){
 	window.sinterklaas.draw.fillText("Click right or arrow down to duck",10,20);
 	window.sinterklaas.draw.fillText("Created by:",10,150);
 	var textoffset = 65;
-	for(var i = 0 ; i < window.sinterklaas.copyright.author.length ; i++){
-		window.sinterklaas.draw.fillText(window.sinterklaas.copyright.author[i],textoffset,150);
-		textoffset += 10+window.sinterklaas.draw.measureText(window.sinterklaas.copyright.author[i]).width;
+	for(var u = 0 ; u < window.sinterklaas.copyright.author.length ; u++){
+		window.sinterklaas.draw.fillText(window.sinterklaas.copyright.author[u],textoffset,150);
+		textoffset += 10+window.sinterklaas.draw.measureText(window.sinterklaas.copyright.author[u]).width;
 	}
 	if(window.sinterklaas.gameover){
 		window.sinterklaas.draw.fillText("GAME OVER",100,100);
