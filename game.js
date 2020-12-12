@@ -52,6 +52,9 @@ document.getElementById("duckbutton").addEventListener("click",function(){
 document.getElementById("githubbutton").addEventListener("click",function(){
 	window.open(window.sinterklaas.copyright.githublink,"newtab");
 });
+document.getElementById("refreshbutton").addEventListener("click",function(){
+	window.sinterklaas.gameover = false;
+});
 // drawing
 window.sinterklaas.drawing = {};
 window.sinterklaas.drawing.clear = function(){
@@ -250,9 +253,9 @@ window.sinterklaas.timers.tree.spawn = function(){
 		dataobject.width = window.sinterklaas.canvas.width;
 		dataobject.type = Math.ceil(Math.random()*2);
 		window.sinterklaas.spawnables.push(dataobject);
-		var rnd = Math.random()*10000;
-		window.setTimeout(window.sinterklaas.timers.tree.spawn,rnd);
 	}
+	var rnd = Math.random()*10000;
+	window.setTimeout(window.sinterklaas.timers.tree.spawn,rnd);
 };
 window.sinterklaas.timers.drawQueue = function(){
 	//
