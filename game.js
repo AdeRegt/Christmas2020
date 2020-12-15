@@ -286,7 +286,7 @@ window.sinterklaas.timers.drawQueue = function(){
 		window.sinterklaas.spawnables[i].width -= window.sinterklaas.timers.tree.velocity;
 		if(window.sinterklaas.spawnables[i].width<1){
 			window.sinterklaas.spawnables.splice(i,1);
-		}else if(window.sinterklaas.spawnables[i].width>10&&window.sinterklaas.spawnables[i].width<50&&((window.sinterklaas.spawnables[i].type==1&&window.sinterklaas.timers.jump.offset>120)||(window.sinterklaas.spawnables[i].type==2&&window.sinterklaas.timers.jump.isDucking==false))){
+		}else if(window.sinterklaas.spawnables[i].width>10&&window.sinterklaas.spawnables[i].width<50&&((window.sinterklaas.spawnables[i].type==1&&window.sinterklaas.timers.jump.offset>120)||(window.sinterklaas.spawnables[i].type==2&&(window.sinterklaas.timers.jump.isDucking==false&&window.sinterklaas.timers.jump.offset>120)))){
 			window.sinterklaas.gameover = true;
 		}
 	}
