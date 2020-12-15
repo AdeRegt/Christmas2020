@@ -36,7 +36,7 @@ window.sinterklaas.hid.oncommand = function(event){
 			window.sinterklaas.timers.jump.isJumping = true;
 		}else if(event==2){
 			window.sinterklaas.timers.jump.isDucking = true;
-			window.sinterklaas.timers.jump.duckingcountdown = 20;
+			window.sinterklaas.timers.jump.duckingcountdown = window.sinterklaas.timers.jump.duckingcountdownMax;
 		}
 	}
 };
@@ -165,7 +165,6 @@ window.sinterklaas.drawing.drawSinterklaas = function(x,y){
 		];
 	}
 	window.sinterklaas.drawing.drawImage(x,y,sinterklaasimage);
-	window.sinterklaas.drawing.setPixel(x,y,100,100,100,255);
 };
 window.sinterklaas.drawing.drawTree = function(x,y){
 	var treeimage = [
@@ -203,7 +202,6 @@ window.sinterklaas.drawing.drawTree = function(x,y){
 		"             XXXXXX                 ",
 	];
 	window.sinterklaas.drawing.drawImage(x,y,treeimage);
-	window.sinterklaas.drawing.setPixel(x,y,100,100,100,255);
 };
 window.sinterklaas.drawing.drawCorona = function(x,y){
 	var coronaimage = [
@@ -228,7 +226,6 @@ window.sinterklaas.drawing.drawCorona = function(x,y){
 		"              XXXXX                 ",
 	];
 	window.sinterklaas.drawing.drawImage(x,y,coronaimage);
-	window.sinterklaas.drawing.setPixel(x,y,100,100,100,255);
 };
 // misc
 window.sinterklaas.gameover = false;
@@ -240,11 +237,12 @@ window.sinterklaas.timers.jump = {};
 window.sinterklaas.timers.jump.isJumping = false;
 window.sinterklaas.timers.jump.isFallingDown = false;
 window.sinterklaas.timers.jump.isDucking = false;
-window.sinterklaas.timers.jump.duckingcountdown = 20;
 window.sinterklaas.timers.jump.offset = 140;
 window.sinterklaas.timers.jump.maxHeight = 70;
 window.sinterklaas.timers.jump.minHeight = 140;
 window.sinterklaas.timers.jump.velocity = 6;
+window.sinterklaas.timers.jump.duckingcountdownMax = (((window.sinterklaas.timers.jump.minHeight - window.sinterklaas.timers.jump.maxHeight)/window.sinterklaas.timers.jump.velocity)*2);
+window.sinterklaas.timers.jump.duckingcountdown = window.sinterklaas.timers.jump.duckingcountdownMax;
 window.sinterklaas.timers.tree = {};
 window.sinterklaas.timers.tree.velocity = 5;
 window.sinterklaas.timers.tree.spawn = function(){
@@ -254,7 +252,7 @@ window.sinterklaas.timers.tree.spawn = function(){
 		dataobject.type = Math.ceil(Math.random()*2);
 		window.sinterklaas.spawnables.push(dataobject);
 	}
-	var rnd = Math.random()*10000;
+	var rnd = (window.sinterklaas.timers.jump.duckingcountdownMax*window.sinterklaas.timers.drawQueueTime) + (Math.random()*10000);
 	window.setTimeout(window.sinterklaas.timers.tree.spawn,rnd);
 };
 window.sinterklaas.timers.drawQueue = function(){
