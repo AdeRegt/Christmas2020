@@ -49,6 +49,12 @@
                 background-color: #44ab44;
                 text-align: center;
             }
+
+            a{
+                text-decoration: none;
+                color: white;
+                font-weight: bolder;
+            }
         </style>
     </header>
     <body>
@@ -70,6 +76,17 @@
             <h1>Game over!</h1><br/>
             Do you want to play again?<br/>
             <button onclick="window.location.reload()">Yes!</button>
+        </div>
+        <div id="gamestart" class="dialog">
+            <h1>Merry Christmas and a happy 2022</h1><br/>
+            Lets play a game!<br/>
+            You need to use your microphone.<br/>
+            Make sound to avoid getting hit by the astroids.<br/>
+            <button onclick="gamestart.style.display='none';app.sanderslando.christmasgame2021.init()">Yes!</button>
+        </div>
+        <div id="allowmic" class="dialog" style="display: none;">
+            <h1>Allow usage of microphone</h1><br/>
+            Your browser will ask somewhere to allow this website to use a microphone<br/>
         </div>
         <script>
             var app = {
@@ -131,6 +148,7 @@
                                                 hit = true;
                                             }else{
                                                 document.getElementsByClassName("score")[0].innerHTML = ++app.sanderslando.christmasgame2021.game.score;
+                                                app.sanderslando.christmasgame2021.intf2 -= 1;
                                             }
                                         }
 
@@ -185,7 +203,9 @@
                                 app.sanderslando.christmasgame2021.audio.analyser.connect(app.sanderslando.christmasgame2021.audio.audioCtx.destination);
                             },
                             init: function(onsuccess,onerror){
+                                allowmic.style.display = "block";
                                 app.sanderslando.christmasgame2021.audio.requestAudioPremission(function(stream){
+                                    allowmic.style.display = "none";
                                     try{
                                         app.sanderslando.christmasgame2021.audio.attachSamplerToElement(stream);
                                         app.sanderslando.christmasgame2021.audio.isr = function(){
@@ -205,7 +225,6 @@
                     }
                 }
             };
-            app.sanderslando.christmasgame2021.init();
         </script>
     </body>
 </html>
