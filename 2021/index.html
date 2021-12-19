@@ -1,10 +1,211 @@
 <html>
     <header>
         <title>Christmas 2021 Game</title>
+        <style>
+            .player{
+                position: absolute;
+                left: 50px;
+                width: 340px;
+                height: 200px;
+                background-image: url("/2021/santa.gif");
+            }
+
+            .credits{
+                position: absolute;
+                bottom: 5px;
+                color: white;
+            }
+
+            .score{
+                position: absolute;
+                top: 5px;
+                right: 15px;
+                color: red;
+                font-weight: bolder;
+                font-size: 100;
+            }
+
+            .needle{
+                position: absolute;
+                width: 200px;
+                height: 133px;
+                transform: rotate(18deg);
+                background-image: url("/2021/needle.gif")
+            }
+
+            body{
+                background-image: url("/2021/landscape-night.gif");
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .dialog{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border: dotted darkred 5px;
+                padding: 10px;
+                background-color: #44ab44;
+                text-align: center;
+            }
+        </style>
     </header>
     <body>
+        <div id="p1" class="player">
+
+        </div>
+
+        <div class="credits">
+            Created by Alexandros de Regt.<br/>
+            SourceCode at <a href="https://github.com/AdeRegt/Christmas2020/tree/master/2021">GitHub</a><br/>
+            Santa by <a href="https://gifer.com/en/gifs/santa-flying">Gifer</a><br/>
+            Commet by <a href="https://gifer.com/en/ZPTm">Gifer</a><br/>
+            Background by <a href="https://tenor.com/view/landscape-night-sky-cloudy-moon-gif-12345257">Tenor</a><br/>
+        </div>
+        <div class="score">
+            0
+        </div>
+        <div id="gameover" class="dialog" style="display: none;">
+            <h1>Game over!</h1><br/>
+            Do you want to play again?<br/>
+            <button onclick="window.location.reload()">Yes!</button>
+        </div>
         <script>
-            
+            var app = {
+                sanderslando: {
+                    christmasgame2021: {
+                        init: function(){
+                            app.sanderslando.christmasgame2021.audio.init(function(){
+                                app.sanderslando.christmasgame2021.game.init();
+                            },function(err){
+                                console.error(err);
+                            });
+                        },
+                        game: {
+                            score: 0,
+                            needleStack: [],
+                            init: function(){
+                                app.sanderslando.christmasgame2021.game.int1 = window.setInterval(app.sanderslando.christmasgame2021.game.isr1,app.sanderslando.christmasgame2021.intf1);
+                                app.sanderslando.christmasgame2021.game.int2 = window.setInterval(app.sanderslando.christmasgame2021.game.isr2,app.sanderslando.christmasgame2021.intf2);
+                            },
+                            isr1: function(){
+                                try{
+                                    var person = document.getElementById("p1");
+                                    app.sanderslando.christmasgame2021.game.ourfec = app.sanderslando.christmasgame2021.audio.ferquency;
+                                    if(app.sanderslando.christmasgame2021.game.ourfec>app.sanderslando.christmasgame2021.game.baseline){
+                                        app.sanderslando.christmasgame2021.game.ourfec = app.sanderslando.christmasgame2021.game.baseline;
+                                    }
+                                    person.style.top = app.sanderslando.christmasgame2021.game.ourfec + "%";
+                                }catch(ex){
+                                    window.clearInterval(app.sanderslando.christmasgame2021.game.int1);
+                                    console.log(ex);
+                                }
+                            },
+                            intf1: 50,
+                            isr2: function(){
+                                try{
+                                    var rd = Math.round((Math.random()*1000)-1);
+                                    if( rd==5 && app.sanderslando.christmasgame2021.game.needleStack.length==0 ){
+                                        var dt = document.createElement("div");
+                                        dt.classList.add("needle");
+                                        dt.style.top = (app.sanderslando.christmasgame2021.game.ourfec)+"%";
+                                        dt.style.left = (window.screen.availWidth-500)+"px";
+                                        document.body.appendChild(dt);
+                                        app.sanderslando.christmasgame2021.game.needleStack.push(dt);
+                                    }
+                                    var tmp = [];
+                                    for(var i = 0 ; i < app.sanderslando.christmasgame2021.game.needleStack.length ; i++){
+                                        var deze = app.sanderslando.christmasgame2021.game.needleStack[i];
+                                        var p = (Number(deze.style.left.replace("px",""))-1);
+                                        deze.style.left = p+"px";
+
+                                        var sdim = deze.getBoundingClientRect();
+                                        var pdim = document.getElementById("p1").getBoundingClientRect();
+                                        
+                                        var hit = false;
+                                        var hitlijn = pdim.x + pdim.width;
+                                        if(sdim.x<=hitlijn||(sdim.x+sdim.width)<=hitlijn){ // xas geraakt
+                                            hitlijn = pdim.y + pdim.height;
+                                            if(sdim.y<=pdim.y&&(sdim.y+sdim.height)<=hitlijn){
+                                                hit = true;
+                                            }else{
+                                                document.getElementsByClassName("score")[0].innerHTML = ++app.sanderslando.christmasgame2021.game.score;
+                                            }
+                                        }
+
+                                        if(hit){
+                                            window.clearInterval(app.sanderslando.christmasgame2021.game.int1);
+                                            window.clearInterval(app.sanderslando.christmasgame2021.game.int2);
+                                            document.getElementById("gameover").style.display="block";
+                                        }
+
+                                        if(p<1){
+                                            document.body.removeChild(deze);
+                                        }else{
+                                            tmp.push(deze);
+                                        }
+                                    }
+                                    app.sanderslando.christmasgame2021.game.needleStack = tmp;
+                                }catch(ex){
+                                    window.clearInterval(app.sanderslando.christmasgame2021.game.int2);
+                                    console.log(ex);
+                                }
+                            },
+                            intf2: 2500,
+                            baseline: 50
+                        },
+                        audio: {
+                            requestAudioPremission: function(onsuccess,onerror){
+                                navigator.mediaDevices.getUserMedia({
+                                    video: false,
+                                    audio: true
+                                }).then(function(message){
+                                    if(typeof(onsuccess)==="function"){
+                                        onsuccess(message);
+                                    }
+                                }).catch(function(error){
+                                    if(typeof(onerror)==="function"){
+                                        onerror(error);
+                                    }
+                                });
+                            },
+                            attachStreamToElement: function(stream,element_name){
+                                var element = document.getElementById(element_name);
+                                element.srcObject = stream;
+                                element.autoplay = true;
+                            },
+                            attachSamplerToElement: function(stream){
+                                app.sanderslando.christmasgame2021.audio.stream = stream;
+                                app.sanderslando.christmasgame2021.audio.AudioContext = window.AudioContext || window.webkitAudioContext;
+                                app.sanderslando.christmasgame2021.audio.audioCtx = new AudioContext();
+                                app.sanderslando.christmasgame2021.audio.source = app.sanderslando.christmasgame2021.audio.audioCtx.createMediaStreamSource(app.sanderslando.christmasgame2021.audio.stream);
+                                app.sanderslando.christmasgame2021.audio.analyser = app.sanderslando.christmasgame2021.audio.audioCtx.createAnalyser();
+                                app.sanderslando.christmasgame2021.audio.source.connect(app.sanderslando.christmasgame2021.audio.analyser);
+                                app.sanderslando.christmasgame2021.audio.analyser.connect(app.sanderslando.christmasgame2021.audio.audioCtx.destination);
+                            },
+                            init: function(onsuccess,onerror){
+                                app.sanderslando.christmasgame2021.audio.requestAudioPremission(function(stream){
+                                    try{
+                                        app.sanderslando.christmasgame2021.audio.attachSamplerToElement(stream);
+                                        app.sanderslando.christmasgame2021.audio.isr = function(){
+                                            var dt = new Float32Array(1024);
+                                            app.sanderslando.christmasgame2021.audio.analyser.getFloatFrequencyData(dt);
+                                            app.sanderslando.christmasgame2021.audio.ferquency = Math.abs((dt[7]/128)*100);
+                                        };
+                                        app.sanderslando.christmasgame2021.audio.intf = 10;
+                                        app.sanderslando.christmasgame2021.audio.int = window.setInterval(app.sanderslando.christmasgame2021.audio.isr,app.sanderslando.christmasgame2021.audio.intf);
+                                    }catch(ex){
+                                        onerror(ex);
+                                    }
+                                    onsuccess();
+                                },onerror);
+                            }
+                        }
+                    }
+                }
+            };
+            app.sanderslando.christmasgame2021.init();
         </script>
     </body>
 </html>
